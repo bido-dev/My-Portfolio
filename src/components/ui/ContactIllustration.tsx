@@ -112,7 +112,7 @@ export default function ContactIllustration() {
       <svg
         ref={svgRef}
         viewBox="0 0 420 440"
-        className="w-full h-auto select-none"
+        className="w-full h-auto select-none touch-none"
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
