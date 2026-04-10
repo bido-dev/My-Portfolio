@@ -50,6 +50,8 @@ export default function SkillsGlobe({ skills }: Props) {
   const n          = skills.length;
 
   const [dims, setDims] = useState({ radius: 220, iconSize: getIconSize() });
+  const [tapped, setTapped] = useState<number | null>(null);
+  const hasDragged = useRef(false);
 
   const basePositions = useRef(
     skills.map((_, i) => fibonacciSphere(n, i))
@@ -126,6 +128,7 @@ export default function SkillsGlobe({ skills }: Props) {
 
   const onPointerDown = (e: React.PointerEvent) => {
     isDragging.current = true;
+    hasDragged.current = false;
     lastPos.current = { x: e.clientX, y: e.clientY };
     containerRef.current?.setPointerCapture(e.pointerId);
   };
@@ -133,6 +136,7 @@ export default function SkillsGlobe({ skills }: Props) {
     if (!isDragging.current) return;
     const dx = e.clientX - lastPos.current.x;
     const dy = e.clientY - lastPos.current.y;
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) hasDragged.current = true;
     rotYRef.current += dx * 0.3;
     rotXRef.current = Math.max(-60, Math.min(60, rotXRef.current - dy * 0.3));
     lastPos.current = { x: e.clientX, y: e.clientY };
@@ -200,6 +204,10 @@ export default function SkillsGlobe({ skills }: Props) {
                 marginTop:  iconSize.margin,
                 willChange: "transform, opacity",
               }}
+              onClick={() => {
+                if (hasDragged.current) return;
+                setTapped((prev) => (prev === i ? null : i));
+              }}
             >
               <div
                 className="w-full h-full rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-150"
@@ -214,7 +222,7 @@ export default function SkillsGlobe({ skills }: Props) {
 
               {/* Tooltip */}
               <div
-                className="absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md text-[10px] font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                className={`absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md text-[10px] font-semibold whitespace-nowrap transition-opacity duration-200 pointer-events-none ${tapped === i ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                 style={{
                   background: "rgba(0,0,0,0.8)",
                   color,
