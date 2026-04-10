@@ -108,11 +108,11 @@ export default function ContactIllustration() {
   }, [movePhone]);
 
   return (
-    <div className="w-full max-w-[400px] mx-auto lg:max-w-none touch-none">
+    <div className="w-full max-w-[400px] mx-auto lg:max-w-none">
       <svg
         ref={svgRef}
         viewBox="0 0 420 440"
-        className="w-full h-auto select-none touch-none"
+        className="w-full h-auto select-none"
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerLeave={onPointerUp}
