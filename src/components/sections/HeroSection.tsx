@@ -13,10 +13,6 @@ const ParticleBackground = dynamic(
 );
 
 export default function HeroSection() {
-  const scrollToContact = () => {
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <section
       id="home"
@@ -77,23 +73,18 @@ export default function HeroSection() {
         {/* Photo */}
         <div className="flex-shrink-0">
           <div className="relative w-56 h-56 sm:w-72 sm:h-72 rounded-full overflow-hidden border-4 border-orange/60 shadow-2xl shadow-purple-dark/50">
-            <Image
-              src="/images/hero-photo.jpg"
-              alt="Abdelhadi Boukarrad"
-              fill
-              sizes="(max-width: 640px) 224px, 288px"
-              className="object-cover"
-              loading="eager"
-              priority
-              onError={(e) => {
-                // Fallback to a colored placeholder if image doesn't exist yet
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
-            />
-            {/* Placeholder shown when image is missing */}
+            {/* Placeholder shown behind image */}
             <div className="absolute inset-0 flex items-center justify-center bg-purple-mid text-6xl font-bold text-white/30 select-none">
               AB
             </div>
+            <Image
+              src="/images/portfolio.png"
+              alt="Abdalla Ammar"
+              fill
+              sizes="(max-width: 640px) 224px, 288px"
+              className="object-cover object-top relative "
+              priority
+            />
           </div>
         </div>
       </div>
